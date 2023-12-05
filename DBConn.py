@@ -38,4 +38,3 @@ def read_data_from_collection():
 if __name__ == "__main__":
     # Run the test
     test_database_connection()
-    read_data_from_collection()
