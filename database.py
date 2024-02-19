@@ -1,10 +1,14 @@
-def newAlert(userID):
+def newAlert(userID, email):
 
-
+    from notification import sendEmail
     import pymongo
     from datetime import datetime
+    import os
+    from dotenv import load_dotenv
 
-    url = 'mongodb+srv://pete:rkJra6htx7zbBKkH@cluster0.udwnlkv.mongodb.net/?retryWrties=true&w=majority'
+    load_dotenv()
+
+    url = os.getenv('DATABASE_URL')
     myclient = pymongo.MongoClient(url)
     db = myclient["pialert"]
 
@@ -14,20 +18,22 @@ def newAlert(userID):
 
     num = 0
 
-    date = datetime.today().strftime('%d/%m/%Y')
-    for x in alerts_collection.find():
-        num = num + 1
+    date = datetime.today().strftime('%d/%m/%Y') # setting the date to todays date
+    for x in alerts_collection.find(): #checking how many alerts are in the database already
+        num = num + 1 # assing 1 to total alerts
 
-    alertID = 'a' + str('{:0>6}'.format(num + 1))
+    alertID = 'a' + str('{:0>6}'.format(num + 1)) # assigning the correct format to alertID eg. a12345
 
-    print(alertID + " " + date)
+    # print(alertID + " " + date) making sure the data is correct
 
-    query = { "alertID": alertID, "date": date, "video":"test", "image":"test" }
+    query = { "alertID": alertID, "date": date, "video":"test", "image":"test" } # wrting queries for the database
     query2 = {"userID": userID, "alertID": alertID}
 
-    alerts_collection.insert_one(query)
+    alerts_collection.insert_one(query) # Updating database with the new alert entry
 
-    user_has_alerts_collection.insert_one(query2)
+    user_has_alerts_collection.insert_one(query2) # Updating the database with the new entry
+
+    sendEmail(email) # Sending a notification email to logged in user
 
 #===================================================================================================================
 
@@ -47,7 +53,8 @@ def login(username, password) :
 
     for result in x:
         userID = result['userID']
+        email = result['email']
 
-    return userID
+    return userID, email
 
 #===============================================================================================================
