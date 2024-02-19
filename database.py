@@ -5,6 +5,7 @@ def newAlert(userID, email):
     from datetime import datetime
     import os
     from dotenv import load_dotenv
+    from encode import encode
 
     load_dotenv()
 
@@ -18,6 +19,8 @@ def newAlert(userID, email):
 
     num = 0
 
+    video = encode() # encode the video and store in varaible
+
     date = datetime.today().strftime('%d/%m/%Y') # setting the date to todays date
     for x in alerts_collection.find(): #checking how many alerts are in the database already
         num = num + 1 # assing 1 to total alerts
@@ -26,7 +29,7 @@ def newAlert(userID, email):
 
     # print(alertID + " " + date) making sure the data is correct
 
-    query = { "alertID": alertID, "date": date, "video":"test", "image":"test" } # wrting queries for the database
+    query = { "alertID": alertID, "date": date, "video":video, "image":"test" } # wrting queries for the database
     query2 = {"userID": userID, "alertID": alertID}
 
     alerts_collection.insert_one(query) # Updating database with the new alert entry
