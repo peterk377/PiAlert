@@ -53,8 +53,8 @@ def sendEmail(receiver_email, file) :
 
     print("Email sent successfully.")
 
-def sendWhatsApp():
-    
+def sendWhatsApp(whatsapp_number):
+
     import os
     from dotenv import load_dotenv
     from twilio.rest import Client
@@ -69,7 +69,7 @@ def sendWhatsApp():
     message = client.messages.create(
         from_='whatsapp:+14155238886',
         body='Your PiAlert has detected motion',
-        to='whatsapp:+353872172977'
+        to='whatsapp:'+whatsapp_number
     )
 
     print(message.sid)
