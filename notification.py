@@ -52,3 +52,24 @@ def sendEmail(receiver_email, file) :
         server.sendmail(sender_email, receiver_email, message.as_string())
 
     print("Email sent successfully.")
+
+def sendWhatsApp():
+    
+    import os
+    from dotenv import load_dotenv
+    from twilio.rest import Client
+
+    load_dotenv()
+
+    account_sid = os.getenv('TWILIO_WHATSAPP_ACCOUNT_SID')
+    auth_token = os.getenv('TWILIO_WHATSAPP_AUTH_TOKEN')
+
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+        from_='whatsapp:+14155238886',
+        body='Your PiAlert has detected motion',
+        to='whatsapp:+353872172977'
+    )
+
+    print(message.sid)

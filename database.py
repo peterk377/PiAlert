@@ -1,6 +1,7 @@
 def newAlert(userID, email):
 
     from notification import sendEmail
+    from notification import sendWhatsApp
     import pymongo
     from datetime import datetime
     import os
@@ -33,7 +34,8 @@ def newAlert(userID, email):
 
     user_has_alerts_collection.insert_one(query2) # Updating the database with the new entry
 
-    sendEmail(email, "clip.mp4") # Sending a notification email to logged in user
+    #sendEmail(email, "clip.mp4") # Sending a notification email to logged in user
+    sendWhatsApp() #Sending notification through whatsapp
 
 #===================================================================================================================
 
