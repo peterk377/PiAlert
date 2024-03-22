@@ -42,6 +42,8 @@ def sendEmail(receiver_email) :
     print("Email sent successfully.")
 
 def sendWhatsApp():
+    
+    import os
     from dotenv import load_dotenv
     from twilio.rest import Client
 
