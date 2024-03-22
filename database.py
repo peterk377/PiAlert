@@ -33,7 +33,7 @@ def newAlert(userID, email):
 
     user_has_alerts_collection.insert_one(query2) # Updating the database with the new entry
 
-    sendEmail(email) # Sending a notification email to logged in user
+    sendEmail(email, "clip.mp4") # Sending a notification email to logged in user
 
 #===================================================================================================================
 
