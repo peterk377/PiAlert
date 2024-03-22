@@ -1,4 +1,4 @@
-def newAlert(userID, email):
+def newAlert(userID, email, whatsapp):
 
     from notification import sendEmail
     from notification import sendWhatsApp
@@ -35,11 +35,11 @@ def newAlert(userID, email):
     user_has_alerts_collection.insert_one(query2) # Updating the database with the new entry
 
     #sendEmail(email, "clip.mp4") # Sending a notification email to logged in user
-    sendWhatsApp() #Sending notification through whatsapp
+    sendWhatsApp(whatsapp) #Sending notification through whatsapp
 
 #===================================================================================================================
 
-def login(username, password) :
+def login(username, password, whatsapp) :
 
     import pymongo
 
@@ -56,7 +56,8 @@ def login(username, password) :
     for result in x:
         userID = result['userID']
         email = result['email']
+        whatsapp = result['whatsapp']
 
-    return userID, email
+    return userID, email, whatsapp
 
 #===============================================================================================================
