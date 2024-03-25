@@ -2,7 +2,7 @@
 3rd year computing project done by;
 Piotr Kimmel.........B00087671
 Panitan Sripoom......B00148508
-Adam Maher...........B
+Adam Maher...........B00148489
 TU Dublin Blanchardstown.
 
 The aim of the project is to create a home security device running on a Raspberry Pi board with Raspberry Pi Legacy OS.
