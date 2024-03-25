@@ -12,10 +12,10 @@ def led_off(pin):
     print(f"Turning off LED on pin {pin}")
 
 # Define GPIO pins
-ledChannel4 = 4
+ledChannel4 = 5
 ledChannel20 = 20
 ledChannel21 = 21
-pirChannel = 26
+pirChannel = 4
 
 # Set up GPIO
 GPIO.setmode(GPIO.BCM)
