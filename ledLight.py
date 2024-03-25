@@ -5,23 +5,24 @@ import threading
 
 # Function to simulate LED turning on
 def led_on(pin):
-    print(f"Turning on LED on pin {pin}")
+    GPIO.output(pin, GPIO.HIGH)
+
 
 # Function to simulate LED turning off
 def led_off(pin):
-    print(f"Turning off LED on pin {pin}")
+    GPIO.output(pin, GPIO.LOW)
 
 # Define GPIO pins
-ledChannel4 = 5
-ledChannel20 = 20
-ledChannel21 = 21
-pirChannel = 4
+ledChannel4 = 4
+#ledChannel20 = 20
+#ledChannel21 = 21
+pirChannel = 26
 
 # Set up GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(ledChannel4, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(ledChannel20, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(ledChannel21, GPIO.OUT, initial=GPIO.LOW)
+#GPIO.setup(ledChannel20, GPIO.OUT, initial=GPIO.LOW)
+#GPIO.setup(ledChannel21, GPIO.OUT, initial=GPIO.LOW)
 
 # Initialize Motion Sensor
 pir = MotionSensor(pirChannel)
@@ -33,24 +34,24 @@ def startLEDs():
     isStarted = True
     while isStarted:
         led_on(ledChannel4)
-        led_off(ledChannel20)
-        led_off(ledChannel21)
-        time.sleep(0.3)
+       # led_off(ledChannel20)
+        #led_off(ledChannel21)
+        time.sleep(1)
         led_off(ledChannel4)
-        led_on(ledChannel20)
-        led_off(ledChannel21)
-        time.sleep(0.3)
+        #led_on(ledChannel20)
+        #led_off(ledChannel21)
+        time.sleep(1)
         led_off(ledChannel4)
-        led_off(ledChannel20)
-        led_off(ledChannel21)
-        time.sleep(0.3)
+        #led_off(ledChannel20)
+        #led_off(ledChannel21)
+        time.sleep(1)
 
 def stopLEDs():
     global isStarted
     isStarted = False
     led_off(ledChannel4)
-    led_off(ledChannel20)
-    led_off(ledChannel21)
+    #led_off(ledChannel20)
+    #led_off(ledChannel21)
 
 try:
     while True:
