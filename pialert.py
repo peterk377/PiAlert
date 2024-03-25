@@ -1,6 +1,7 @@
 from gpiozero import MotionSensor
 from gpiozero import PiCamera
 from dateTime import dateTime
+from encode import encode
 
 pir = MotionSensor(4)
 camera = PiCamera()
@@ -12,5 +13,6 @@ while True:
   print("Motion Detected")
   camera.start_recording(filename)
   pir.wait_for_no_motion()
+  encode(filename)
   camera.stop_recording()
   print("Stopped Recording")

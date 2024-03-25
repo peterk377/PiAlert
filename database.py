@@ -20,9 +20,9 @@ def newAlert(userID, email, whatsapp):
 
     num = 0
 
-    video = encode() # encode the video and store in varaible
+    video = encode() # encode the video and store in varaible (Currently Testing video are store in the local)
 
-    date = datetime.today().strftime('%d/%m/%Y') # setting the date to todays date
+    date = datetime.today().strftime('%d/%m/%Y/ %X') # setting the date to todays date
     for x in alerts_collection.find(): #checking how many alerts are in the database already
         num = num + 1 # assing 1 to total alerts
 
@@ -44,9 +44,14 @@ def newAlert(userID, email, whatsapp):
 
 def login(username, password, whatsapp) :
 
+    import os
     import pymongo
+    from dotenv import load_dotenv
 
-    url = 'mongodb+srv://pete:rkJra6htx7zbBKkH@cluster0.udwnlkv.mongodb.net/?retryWrties=true&w=majority'
+    load_dotenv()
+
+
+    url = os.getenv('DATABASE_URL')
     myclient = pymongo.MongoClient(url)
     db = myclient["pialert"]
 
