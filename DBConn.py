@@ -1,5 +1,9 @@
 from pymongo import MongoClient
+<<<<<<< Updated upstream
 from notification import 
+=======
+
+>>>>>>> Stashed changes
 
 def get_database():
     # Provide the mongodb atlas url to connect python to mongodb using pymongo
