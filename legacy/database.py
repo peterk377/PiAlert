@@ -6,7 +6,7 @@ def newAlert(userID, email, whatsapp, filename):
     from datetime import datetime
     import os
     from dotenv import main
-    from encode import encodefile
+    from encode import encode
 
     main.load_dotenv()
 
@@ -17,12 +17,9 @@ def newAlert(userID, email, whatsapp, filename):
     db = myclient["pialert"]
 
     alerts_collection = db["alerts"]
-    user_collection = db["user"]
-    user_has_alerts_collection = db["user_has_alerts"]
 
     num = 0
 
-    video = encodefile(filename) # encode the video and store in varaible (Currently Testing video are store in the local)
 
     date = datetime.today().strftime('%d/%m/%Y/ %X') # setting the date to todays date
     for x in alerts_collection.find(): #checking how many alerts are in the database already
@@ -30,17 +27,16 @@ def newAlert(userID, email, whatsapp, filename):
 
     alertID = 'a' + str('{:0>6}'.format(num + 1)) # assigning the correct format to alertID eg. a12345
 
-    # print(alertID + " " + date) making sure the data is correct
+    video = encode(filename)
 
-    query = { "alertID": alertID, "date": date, "video":"testvid", "image":"test", "userID":userID } # wrting queries for the database
-    query2 = {"userID": userID, "alertID": alertID}
+    query = { "alertID": alertID, "date": "29/04/2024/ 15:44:59", "video": video, "userID":userID } # wrting queries for the database
+    
 
     alerts_collection.insert_one(query) # Updating database with the new alert entry
 
-    user_has_alerts_collection.insert_one(query2) # Updating the database with the new entry
+    
 
-    sendEmail(email, filename) # Sending a notification email to logged in user
-    sendWhatsApp(whatsapp) #Sending notification through whatsapp
+
     print('new alert created')
 
 #===================================================================================================================
@@ -50,8 +46,7 @@ def login(username, password, whatsapp) :
     import os
     import pymongo
     from dotenv import main
-    from encode import encodeDetails, decodeDetails
-
+    
     main.load_dotenv()
 
 
@@ -61,27 +56,15 @@ def login(username, password, whatsapp) :
 
     user_collection = db["user"]
 
-    encodedUsername = encodeDetails(username)
-    encodedPassword = encodeDetails(password)
-
-    query = {"username": encodedUsername, "password":encodedPassword}
+    query = {"username": username, "password":password}
 
     x = user_collection.find(query)
-
-    userID = ''
-    email = ''
-    whatsapp = ''
 
     for result in x:
         userID = result['userID']
         email = result['email']
         whatsapp = result['whatsapp']
-
-
-    if(userID == ''):
-        return "incorrect details","incorrect details","incorrect details",1
-
-    else:
-        return userID, decodeDetails(email), decodeDetails(whatsapp),0
+    print("got here")
+    return userID, email, whatsapp
 
 #===============================================================================================================
